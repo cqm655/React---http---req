@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -8,7 +8,7 @@ function App() {
   const [isLoading, setIdLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  async function fetchMovieHandler() {
+  const fetchMovieHandler = useCallback(async() => {
     setIdLoading(true);
     setError(null);
 
@@ -34,7 +34,11 @@ function App() {
       setError(error.message);
     }
     setIdLoading(false);
-  }
+  },[]);
+
+  useEffect(() => {
+    fetchMovieHandler();
+  },[fetchMovieHandler]) 
 
   return (
     <React.Fragment>
